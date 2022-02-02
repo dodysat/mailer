@@ -25,5 +25,5 @@ async function sendEmail(payload) {
     text: payload.text ? payload.text : '',
     html: payload.html ? Buffer.from(payload.html, 'base64').toString() : '',
   });
-  console.log(info);
+  return info;
 }
