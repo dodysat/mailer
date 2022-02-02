@@ -1,0 +1,23 @@
+steps:
+  - name: "node:16"
+    args:
+      - install
+    id: build-node
+    entrypoint: npm
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    args:
+      - gcloud
+      - functions
+      - deploy
+      - mailer
+      - "--region=us-west1"
+      - "--source=."
+      - "--trigger-topic=mailer"
+      - "--runtime=nodejs16"
+      - "--entry-point=mailerExec"
+      - "--ingress-settings=internal-only"
+      - "--memory=256MB"
+      - "--max-instances=10"
+      - "--timeout=10s"
+    waitFor:
+      - build-node
